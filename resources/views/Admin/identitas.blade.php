@@ -42,7 +42,7 @@
                     <tr>
                         <th>Email</th>
                         <td>
-                            <input class="form-control" type="text" name="email_app" value="{{ $identitas->email_app }}">
+                            <input class="form-control" type="email" name="email_app" value="{{ $identitas->email_app }}">
                         </td>
                     </tr>
                     <tr>

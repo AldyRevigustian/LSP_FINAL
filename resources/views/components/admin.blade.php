@@ -65,7 +65,7 @@
         </a>
         <ul class="submenu {{ request()->is('admin/pesan*') ? 'active' : '' }}">
             <li class="submenu-item {{ request()->is('admin/pesan/terkirim') ? 'active' : '' }}">
-                <a href="{{ route('admin.pesan_terkirim') }}">Kirim Pesan</a>
+                <a href="{{ route('admin.pesan_terkirim') }}">Pesan Terkirim</a>
             </li>
             <li class="submenu-item {{ request()->is('admin/pesan/masuk') ? 'active' : '' }}">
                 <a href="{{ route('admin.pesan_masuk') }}">Pesan Masuk</a>

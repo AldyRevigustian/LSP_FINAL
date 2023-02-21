@@ -38,10 +38,10 @@
                             @foreach ($pesans as $key => $pesan)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $pesan->pengirim->username }}</td>
+                                    <td>{{ $pesan->pengirim->fullname }}</td>
                                     <td>{{ $pesan->judul }}</td>
                                     <td>{{ $pesan->isi }}</td>
-                                    <td>{{ $pesan->status }}</td>
+                                    <td>{{ Str::ucfirst($pesan->status) }}</td>
                                     <td>{{ $pesan->tanggal_kirim }}</td>
                                     <td>
                                         @if ($pesan->status == 'terkirim')

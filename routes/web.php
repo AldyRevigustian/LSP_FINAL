@@ -9,7 +9,18 @@ Route::get('/', function () {
         if (Auth::user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->route('.dashboard');
+            return redirect()->route('user.dashboard');
+        }
+    }
+    return redirect('/login');
+});
+
+Route::get('/home', function () {
+    if (isset(Auth::user()->role)) {
+        if (Auth::user()->role == 'admin') {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('user.dashboard');
         }
     }
     return redirect('/login');

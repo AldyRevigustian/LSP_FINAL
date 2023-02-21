@@ -30,6 +30,7 @@
                                 <th>Kode Anggota</th>
                                 <th>NIS</th>
                                 <th>Nama Lengkap</th>
+                                <th>Username</th>
                                 <th>Kelas</th>
                                 <th>Alamat</th>
                                 <th class="col-2">Status</th>
@@ -43,6 +44,7 @@
                                     <td>{{ $anggota->kode }}</td>
                                     <td>{{ $anggota->nis }}</td>
                                     <td>{{ $anggota->fullname }}</td>
+                                    <td>{{ $anggota->username }}</td>
                                     <td>{{ $anggota->kelas }}</td>
                                     <td>{{ $anggota->alamat }}</td>
                                     <td>

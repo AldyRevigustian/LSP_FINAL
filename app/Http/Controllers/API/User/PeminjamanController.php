@@ -18,7 +18,7 @@ class PeminjamanController extends Controller
         $data = [];
         foreach ($peminjamans as $p) {
             $datas['id'] = $p->id;
-            $datas['user'] = $p->user->username;
+            $datas['user'] = $p->user->fullname;
             $datas['buku'] = $p->buku->judul;
             $datas['tanggal_peminjaman'] = $p->tanggal_peminjaman;
             $datas['tanggal_pengembalian'] = $p->tanggal_pengembalian ?? '-';
@@ -54,7 +54,7 @@ class PeminjamanController extends Controller
                     ]);
 
                     $datas['id'] = $peminjaman->id;
-                    $datas['user'] = $peminjaman->user->username;
+                    $datas['user'] = $peminjaman->user->fullname;
                     $datas['buku'] = $peminjaman->buku->judul;
                     $datas['tanggal_peminjaman'] = $peminjaman->tanggal_peminjaman;
                     $datas['kondisi_buku_saat_dipinjam'] = $peminjaman->kondisi_buku_saat_dipinjam;
@@ -82,7 +82,7 @@ class PeminjamanController extends Controller
                         'j_buku_rusak' => $buku->j_buku_rusak - 1
                     ]);
                     $datas['id'] = $peminjaman->id;
-                    $datas['user'] = $peminjaman->user->username;
+                    $datas['user'] = $peminjaman->user->fullname;
                     $datas['buku'] = $peminjaman->buku->judul;
                     $datas['tanggal_peminjaman'] = $peminjaman->tanggal_peminjaman;
                     $datas['kondisi_buku_saat_dipinjam'] = $peminjaman->kondisi_buku_saat_dipinjam;

@@ -16,8 +16,8 @@ class PesanController extends Controller
         $kirim = [];
         foreach ($pesan_terkirim as $k) {
             $kirims['id'] = $k->id;
-            $kirims['penerima'] = $k->penerima->username;
-            $kirims['pengirim'] = $k->pengirim->username;
+            $kirims['penerima'] = $k->penerima->fullname;
+            $kirims['pengirim'] = $k->pengirim->fullname;
             $kirims['judul'] = $k->judul;
             $kirims['isi'] = $k->isi;
             $kirims['status'] = $k->status;
@@ -29,8 +29,8 @@ class PesanController extends Controller
         $terima = [];
         foreach ($pesan_masuk as $p) {
             $terimas['id'] = $p->id;
-            $terimas['penerima'] = $p->penerima->username;
-            $terimas['pengirim'] = $p->pengirim->username;
+            $terimas['penerima'] = $p->penerima->fullname;
+            $terimas['pengirim'] = $p->pengirim->fullname;
             $terimas['judul'] = $p->judul;
             $terimas['isi'] = $p->isi;
             $terimas['status'] = $p->status;

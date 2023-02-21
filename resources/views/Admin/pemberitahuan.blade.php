@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <select name="status" class="form-select">
                                 <option value="" disabled selected>
-                                    --Pilih Kategori--</option>
+                                    --Pilih Status--</option>
                                 <option value="aktif">Aktif</option>
                                 <option value="nonaktif">Nonaktif</option>
                             </select>

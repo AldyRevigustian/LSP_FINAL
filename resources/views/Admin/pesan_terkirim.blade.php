@@ -39,10 +39,10 @@
                             @foreach ($pesans as $key => $pesan)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $pesan->penerima->username }}</td>
+                                    <td>{{ $pesan->penerima->fullname }}</td>
                                     <td>{{ $pesan->judul }}</td>
                                     <td>{{ $pesan->isi }}</td>
-                                    <td>{{ $pesan->status }}</td>
+                                    <td>{{ Str::ucfirst($pesan->status) }}</td>
                                     <td>{{ $pesan->tanggal_kirim }}</td>
                                 </tr>
                             @endforeach
@@ -73,7 +73,7 @@
                                     --Pilih Penerima--</option>
                                 @foreach ($penerimas as $penerima)
                                     <option value="{{ $penerima->id }}">
-                                        {{ $penerima->username }}
+                                        {{ $penerima->fullname }}
                                     </option>
                                 @endforeach
                             </select>

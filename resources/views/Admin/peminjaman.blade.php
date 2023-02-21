@@ -44,8 +44,8 @@
                                     <td>{{ $peminjaman->buku->judul }}</td>
                                     <td>{{ $peminjaman->tanggal_peminjaman }}</td>
                                     <td>{{ $peminjaman->tanggal_pengembalian ?? '-' }}</td>
-                                    <td>{{ $peminjaman->kondisi_buku_saat_dipinjam ?? '-' }}</td>
-                                    <td>{{ $peminjaman->kondisi_buku_saat_dikembalikan ?? '-' }}</td>
+                                    <td>{{ Str::ucfirst($peminjaman->kondisi_buku_saat_dipinjam) ?? '-' }}</td>
+                                    <td>{{ Str::ucfirst($peminjaman->kondisi_buku_saat_dikembalikan) ?? '-' }}</td>
                                     <td>{{ $peminjaman->denda ?? '-' }}</td>
                                 </tr>
                             @endforeach

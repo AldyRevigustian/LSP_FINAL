@@ -28,6 +28,7 @@
                         <thead>
                             <tr>
                                 <th class="col-1">No.</th>
+                                <th>Kode Kategori</th>
                                 <th>Nama Kategori</th>
                                 <th class="col-1">Aksi</th>
                             </tr>
@@ -36,6 +37,7 @@
                             @foreach ($kategoris as $key => $kategori)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
+                                    <td>{{ $kategori->kode }}</td>
                                     <td>{{ $kategori->nama }}</td>
                                     <td>
                                         <a href="#" class="btn icon btn-warning text-light" data-bs-toggle="modal"

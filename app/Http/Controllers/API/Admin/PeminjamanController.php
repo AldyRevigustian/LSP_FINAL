@@ -14,7 +14,7 @@ class PeminjamanController extends Controller
         $data = [];
         foreach ($peminjamans as $p) {
             $datas['id'] = $p->id;
-            $datas['user'] = $p->user->username;
+            $datas['user'] = $p->user->fullname;
             $datas['buku'] = $p->buku->judul;
             $datas['tanggal_peminjaman'] = $p->tanggal_peminjaman;
             $datas['tanggal_pengembalian'] = $p->tanggal_pengembalian ?? '-';
