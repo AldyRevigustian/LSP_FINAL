@@ -3,74 +3,68 @@
 namespace App\Http\Controllers\API\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Identitas;
 use App\Models\Peminjaman;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
     public function peminjaman(Request $request)
     {
-        $peminjamans = Peminjaman::whereDate('tanggal_peminjaman', $request->tanggal)->get();
-        $data = [];
-        foreach ($peminjamans as $peminjaman) {
-            $datas['id'] = $peminjaman->id;
-            $datas['user'] = $peminjaman->user->username;
-            $datas['buku'] = $peminjaman->buku->judul;
-            $datas['tanggal_peminjaman'] = $peminjaman->tanggal_peminjaman;
-            $datas['tanggal_pengembalian'] = $peminjaman->tanggal_pengembalian;
-            $datas['kondisi_buku_saat_dipinjam'] = $peminjaman->kondisi_buku_saat_dipinjam;
-            $datas['kondisi_buku_saat_dikembalikan'] = $peminjaman->kondisi_buku_saat_dikembalikan;
-            $datas['denda'] = $peminjaman->denda;
-            $data[] = $datas;
-        }
+        $identitas = Identitas::first();
+        $peminjamans = Peminjaman::where('tanggal_peminjaman', $request->tanggal)->get();
+
+        $pdfName = 'Laporan_Peminjaman_' . $request->tanggal . '_' . time() . '.pdf';
+
+        $pdf = app('dompdf.wrapper');
+        $hasil = $pdf->loadView('admin.laporan_pdf', compact('peminjamans', 'identitas'));
+
+        $content = $pdf->download()->getOriginalContent();
+        Storage::put('public/' . $pdfName, $content);
+
         return response()->json([
             'message' => 'Laporan Peminjaman ' . $request->tanggal,
-            'data' => $data,
+            'pdf' => url('storage/' . $pdfName),
         ]);
     }
 
     public function pengembalian(Request $request)
     {
-        $pengembalians = Peminjaman::whereDate('tanggal_pengembalian', $request->tanggal)->get();
-        $data = [];
-        foreach ($pengembalians as $pengembalian) {
-            $datas['id'] = $pengembalian->id;
-            $datas['user'] = $pengembalian->user->username;
-            $datas['buku'] = $pengembalian->buku->judul;
-            $datas['tanggal_peminjaman'] = $pengembalian->tanggal_peminjaman;
-            $datas['tanggal_pengembalian'] = $pengembalian->tanggal_pengembalian;
-            $datas['kondisi_buku_saat_dipinjam'] = $pengembalian->kondisi_buku_saat_dipinjam;
-            $datas['kondisi_buku_saat_dikembalikan'] = $pengembalian->kondisi_buku_saat_dikembalikan;
-            $datas['denda'] = $pengembalian->denda;
-            $data[] = $datas;
-        }
+        $peminjamans = Peminjaman::whereDate('tanggal_pengembalian', $request->tanggal)->get();
+        $identitas = Identitas::first();
+
+        $pdfName = 'Laporan_Pengembalian_' . $request->tanggal . '_' . time() . '.pdf';
+        $pdf = app('dompdf.wrapper');
+        $hasil = $pdf->loadView('admin.laporan_pdf', compact('peminjamans', 'identitas'));
+
+        $content = $pdf->download()->getOriginalContent();
+        Storage::put('public/' . $pdfName, $content);
+
         return response()->json([
             'message' => 'Laporan Pengembalian ' . $request->tanggal,
-            'data' => $data,
+            'pdf' => url('storage/' . $pdfName),
         ]);
     }
 
     public function anggota(Request $request)
     {
-        $laporan = Peminjaman::where('user_id', $request->user_id)->get();
-        $data = [];
+        $peminjamans = Peminjaman::where('user_id', $request->user_id)->get();
+        $identitas = Identitas::first();
 
-        foreach ($laporan as $p) {
-            $datas['id'] = $p->id;
-            $datas['user'] = $p->user->username;
-            $datas['buku'] = $p->buku->judul;
-            $datas['tanggal_peminjaman'] = $p->tanggal_peminjaman;
-            $datas['tanggal_pengembalian'] = $p->tanggal_pengembalian;
-            $datas['kondisi_buku_saat_dipinjam'] = $p->kondisi_buku_saat_dipinjam;
-            $datas['kondisi_buku_saat_dikembalikan'] = $p->kondisi_buku_saat_dikembalikan;
-            $datas['denda'] = $p->denda;
-            $data[] = $datas;
-        }
+        $pdfName = 'Laporan_Anggota' . $request->tanggal . '_' . time() . '.pdf';
+        $pdf = app('dompdf.wrapper');
+        $hasil = $pdf->loadView('admin.laporan_pdf', compact('peminjamans', 'identitas'));
+
+        $content = $pdf->download()->getOriginalContent();
+        Storage::put('public/' . $pdfName, $content);
+
+        $user = User::where('id', $request->user_id)->first();
 
         return response()->json([
-            'message' => 'Laporan Anggota ' . User::where('id', $request->user_id)->first()->username,
-            'data' => $data,
+            'message' => 'Laporan Anggota ' . $user->fullname,
+            'pdf' => url('storage/' . $pdfName),
         ]);
     }
 }

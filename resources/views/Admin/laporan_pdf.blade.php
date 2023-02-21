@@ -46,7 +46,7 @@
                     <td>{{ $peminjaman->user->fullname }}</td>
                     <td>{{ $peminjaman->buku->judul }}</td>
                     <td>{{ $peminjaman->tanggal_peminjaman }}</td>
-                    <td>{{ $peminjaman->tanggal_pengembalian }}</td>
+                    <td>{{ $peminjaman->tanggal_pengembalian ?? '-' }}</td>
                 </tr>
             @endforeach
         </tbody>
