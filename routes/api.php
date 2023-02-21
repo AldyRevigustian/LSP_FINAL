@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
-
 Route::group(['middleware' => ['auth:sanctum', 'role:admin'], 'prefix' => 'admin'], function () {
     Route::prefix('anggota')->controller(App\Http\Controllers\API\admin\AnggotaController::class)->group(function () {
         Route::get('/', 'index');
