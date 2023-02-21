@@ -34,7 +34,7 @@ class IdentitasController extends Controller
         }
 
         if ($identitas) {
-            return redirect()->route('admin.identitas')->with('status', 'success')->with('message', 'Berhasil Mengedit Identitas');
+            return redirect()->route('admin.identitas')->with('status', 'success')->with('message', 'Sukses Mengedit Identitas');
         }
         return redirect()->route('admin.identitas')->with('status', 'danger')->with('message', 'Gagal Mengedit Identitas');
     }

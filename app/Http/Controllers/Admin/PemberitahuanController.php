@@ -22,7 +22,7 @@ class PemberitahuanController extends Controller
         ]);
 
         if ($pemberitahuan) {
-            return redirect()->route('admin.pemberitahuan')->with('status', 'success')->with('message', 'Success Menambahkan Pemberitahuan Baru');
+            return redirect()->route('admin.pemberitahuan')->with('status', 'success')->with('message', 'Sukses Menambahkan Pemberitahuan Baru');
         }
         return redirect()->route('admin.pemberitahuan')->with('status', 'danger')->with('message', 'Gagal Menambahkan Pemberitahuan Baru');
     }
@@ -36,7 +36,7 @@ class PemberitahuanController extends Controller
         ]);
 
         if ($pemberitahuan) {
-            return redirect()->route('admin.pemberitahuan')->with('status', 'success')->with('message', 'Success Mengedit Pemberitahuan');
+            return redirect()->route('admin.pemberitahuan')->with('status', 'success')->with('message', 'Sukses Mengedit Pemberitahuan');
         }
         return redirect()->route('admin.pemberitahuan')->with('status', 'danger')->with('message', 'Gagal Mengedit Pemberitahuan');
     }
@@ -46,7 +46,7 @@ class PemberitahuanController extends Controller
         $pemberitahuan = Pemberitahuan::find($id)->delete();
 
         if ($pemberitahuan) {
-            return redirect()->route('admin.pemberitahuan')->with('status', 'success')->with('message', 'Success Menghapus Pemberitahuan');
+            return redirect()->route('admin.pemberitahuan')->with('status', 'success')->with('message', 'Sukses Menghapus Pemberitahuan');
         }
         return redirect()->route('admin.pemberitahuan')->with('status', 'danger')->with('message', 'Gagal Menghapus Pemberitahuan');
     }

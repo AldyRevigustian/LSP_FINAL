@@ -25,7 +25,7 @@ class KategoriController extends Controller
             $kategori->update([
                 'kode' => 'KK' . '' . $format
             ]);
-            return redirect()->route('admin.kategori')->with('status', 'success')->with('message', 'Success Menambahkan Kategori Baru');
+            return redirect()->route('admin.kategori')->with('status', 'success')->with('message', 'Sukses Menambahkan Kategori Baru');
         }
         return redirect()->route('admin.kategori')->with('status', 'danger')->with('message', 'Gagal Menambahkan Kategori Baru');
     }
@@ -38,7 +38,7 @@ class KategoriController extends Controller
         ]);
 
         if ($kategori) {
-            return redirect()->route('admin.kategori')->with('status', 'success')->with('message', 'Success Mengedit Kategori');
+            return redirect()->route('admin.kategori')->with('status', 'success')->with('message', 'Sukses Mengedit Kategori');
         }
         return redirect()->route('admin.kategori')->with('status', 'danger')->with('message', 'Gagal Mengedit Kategori');
     }
@@ -48,7 +48,7 @@ class KategoriController extends Controller
         $kategori = Kategori::find($id)->delete();
 
         if ($kategori) {
-            return redirect()->route('admin.kategori')->with('status', 'success')->with('message', 'Success Menghapus Kategori');
+            return redirect()->route('admin.kategori')->with('status', 'success')->with('message', 'Sukses Menghapus Kategori');
         }
         return redirect()->route('admin.kategori')->with('status', 'danger')->with('message', 'Gagal Menghapus Kategori');
     }

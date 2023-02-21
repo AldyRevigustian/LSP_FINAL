@@ -26,7 +26,7 @@ class PenerbitController extends Controller
             $penerbit->update([
                 'kode' => 'PP' . '' . $format
             ]);
-            return redirect()->route('admin.penerbit')->with('status', 'success')->with('message', 'Success Menambahkan Penerbit Baru');
+            return redirect()->route('admin.penerbit')->with('status', 'success')->with('message', 'Sukses Menambahkan Penerbit Baru');
         }
         return redirect()->route('admin.penerbit')->with('status', 'danger')->with('message', 'Gagal Menambahkan Penerbit Baru');
     }
@@ -41,7 +41,7 @@ class PenerbitController extends Controller
         ]);
 
         if ($penerbit) {
-            return redirect()->route('admin.penerbit')->with('status', 'success')->with('message', 'Success Mengedit Penerbit ');
+            return redirect()->route('admin.penerbit')->with('status', 'success')->with('message', 'Sukses Mengedit Penerbit ');
         }
         return redirect()->route('admin.penerbit')->with('status', 'danger')->with('message', 'Gagal Mengedit Penerbit ');
     }
@@ -51,7 +51,7 @@ class PenerbitController extends Controller
         $penerbit = Penerbit::find($id)->delete();
 
         if ($penerbit) {
-            return redirect()->route('admin.penerbit')->with('status', 'success')->with('message', 'Success Menghapus Penerbit');
+            return redirect()->route('admin.penerbit')->with('status', 'success')->with('message', 'Sukses Menghapus Penerbit');
         }
         return redirect()->route('admin.penerbit')->with('status', 'danger')->with('message', 'Gagal Menghapus Penerbit');
     }

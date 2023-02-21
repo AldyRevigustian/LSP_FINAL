@@ -39,7 +39,7 @@ class BukuController extends Controller
         ]);
 
         if ($buku) {
-            return redirect()->route('admin.buku')->with('status', 'success')->with('message', 'Berhasil Menambah buku');
+            return redirect()->route('admin.buku')->with('status', 'success')->with('message', 'Sukses Menambah buku');
         }
         return redirect()->route('admin.buku')->with('status', 'danger')->with('message', 'Gagal Menambah buku');
     }
@@ -67,7 +67,7 @@ class BukuController extends Controller
         }
 
         if ($buku) {
-            return redirect()->route('admin.buku')->with('status', 'success')->with('message', 'Berhasil Mengubah buku');
+            return redirect()->route('admin.buku')->with('status', 'success')->with('message', 'Sukses Mengubah buku');
         }
         return redirect()->route('admin.buku')->with('status', 'danger')->with('message', 'Gagal Mengubah buku');
     }
@@ -76,7 +76,7 @@ class BukuController extends Controller
     {
         $buku = Buku::find($id)->delete();
         if ($buku) {
-            return redirect()->route('admin.buku')->with('status', 'success')->with('message', 'Berhasil Menghapus buku');
+            return redirect()->route('admin.buku')->with('status', 'success')->with('message', 'Sukses Menghapus buku');
         }
         return redirect()->route('admin.buku')->with('status', 'danger')->with('message', 'Gagal Menghapus buku');
     }

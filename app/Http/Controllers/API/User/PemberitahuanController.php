@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Berita;
+use App\Models\Pemberitahuan;
 use Illuminate\Http\Request;
 
-class BeritaController extends Controller
+class PemberitahuanController extends Controller
 {
     public function index()
     {
         return response()->json([
-            'data' => Berita::where('status', 'aktif')->get(),
+            'data' => Pemberitahuan::where('status', 'aktif')->get(),
         ]);
     }
 }

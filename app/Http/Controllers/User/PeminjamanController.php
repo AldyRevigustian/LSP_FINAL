@@ -52,7 +52,7 @@ class PeminjamanController extends Controller
                 }
             }
 
-            return redirect()->route('user.peminjaman')->with('status', 'success')->with('message', 'Berhasil menambah peminjaman');
+            return redirect()->route('user.peminjaman')->with('status', 'success')->with('message', 'Sukses menambah peminjaman');
         };
 
         return redirect()->route('user.peminjaman')->with('status', 'danger')->with('message', 'Gagal menambah peminjaman');

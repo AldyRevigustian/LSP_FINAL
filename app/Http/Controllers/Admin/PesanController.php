@@ -29,7 +29,7 @@ class PesanController extends Controller
         $pesan->update([
             'status' => 'terbaca'
         ]);
-        return redirect()->route('admin.pesan_masuk')->with('status', 'success')->with('message', 'Success Membaca Pesan');
+        return redirect()->route('admin.pesan_masuk')->with('status', 'success')->with('message', 'Sukses Membaca Pesan');
     }
 
     public function kirim_pesan(Request $request)
@@ -44,7 +44,7 @@ class PesanController extends Controller
         ]);
 
         if ($pesan) {
-            return redirect()->route('admin.pesan_terkirim')->with('status', 'success')->with('message', 'Success Mengirim Pesan');
+            return redirect()->route('admin.pesan_terkirim')->with('status', 'success')->with('message', 'Sukses Mengirim Pesan');
         }
     }
 }

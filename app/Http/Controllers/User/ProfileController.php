@@ -36,7 +36,7 @@ class ProfileController extends Controller
                 ]);
             }
 
-            return redirect()->route('user.profile')->with('status', 'success')->with('message', 'Berhasil Mengupdate Profile');
+            return redirect()->route('user.profile')->with('status', 'success')->with('message', 'Sukses Mengupdate Profile');
         }
         return redirect()->route('user.profile')->with('status', 'danger')->with('message', 'Gagal Mengupdate Profile');
     }

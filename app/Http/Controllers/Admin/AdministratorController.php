@@ -29,9 +29,9 @@ class AdministratorController extends Controller
             $total = count(User::where('role', 'admin')->get());
             $format = sprintf("%03d", $total);
             $admin->update([
-                'kode' => 'AA' . '' . $format
+                'kode' => 'SA' . '' . $format
             ]);
-            return redirect()->route('admin.administrator')->with('status', 'success')->with('message', 'Success Menambahkan Admin Baru');
+            return redirect()->route('admin.administrator')->with('status', 'success')->with('message', 'Sukses Menambahkan Admin Baru');
         }
         return redirect()->route('admin.administrator')->with('status', 'danger')->with('message', 'Gagal Menambahkan Admin Baru');
     }
@@ -45,7 +45,7 @@ class AdministratorController extends Controller
         ]);
 
         if ($admin) {
-            return redirect()->route('admin.administrator')->with('status', 'success')->with('message', 'Success Mengedit Admin');
+            return redirect()->route('admin.administrator')->with('status', 'success')->with('message', 'Sukses Mengedit Admin');
         }
         return redirect()->route('admin.administrator')->with('status', 'danger')->with('message', 'Gagal Mengedit Admin');
     }
@@ -55,7 +55,7 @@ class AdministratorController extends Controller
         $admin = User::find($id)->delete();
 
         if ($admin) {
-            return redirect()->route('admin.administrator')->with('status', 'success')->with('message', 'Success Menghapus Admin');
+            return redirect()->route('admin.administrator')->with('status', 'success')->with('message', 'Sukses Menghapus Admin');
         }
         return redirect()->route('admin.administrator')->with('status', 'danger')->with('message', 'Gagal Menghapus Admin');
     }
