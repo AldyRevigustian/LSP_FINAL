@@ -42,23 +42,11 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'username';
+        return 'email';
     }
 
     protected function authenticated(Request $request, $user)
     {
-        $user->update([
-            'terakhir_login' => date('Y-m-d H:i:s')
-        ]);
-
-        if (Auth::user()->verif == 'verified') {
-            if ($user->role == 'admin') {
-                return redirect()->route('admin.dashboard');
-            }
-            return redirect()->route('user.dashboard');
-        }else{
-            Auth::logout();
-            return redirect()->route('login')->with('status', 'danger')->with('message', 'Akun anda belum terverifikasi');
-        }
+        return redirect()->route('admin.dashboard');
     }
 }

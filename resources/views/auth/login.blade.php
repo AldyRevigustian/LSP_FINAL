@@ -18,9 +18,8 @@
                 <div id="auth-left">
                     <center>
                         <img src="{{ '/assets/images/logo/logo.png' }}" width="130px" height="130px"
-                            style="margin-bottom:2rem" alt="Logo" />
+                            style="margin-bottom:1rem" alt="Logo" />
                     </center>
-
                     <h1 class="auth-title">Log in.</h1>
 
                     @if (session('status'))
@@ -31,11 +30,11 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">
-                            <input id="username" type="text"
-                                class="form-control @error('username') is-invalid @enderror form-control-xl"
-                                name="username" value="{{ old('username') }}" required autocomplete="username"
-                                placeholder="Username" autofocus>
-                            @error('username')
+                            <input id="email" type="text"
+                                class="form-control @error('email') is-invalid @enderror form-control-xl"
+                                name="email" value="{{ old('email') }}" required autocomplete="email"
+                                placeholder="Email" autofocus>
+                            @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -58,22 +57,17 @@
                                 <i class="bi bi-shield-lock"></i>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit">
+                        <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5 mb-5" type="submit">
                             Log in
                         </button>
                     </form>
-                    <div class="text-center mt-5 text-lg fs-4">
-                        <p class="text-gray-600">
-                            Don't have an account?
-                            <a href="{{ route('register') }}" class="font-bold">Sign up</a>.
-                        </p>
-                    </div>
+
                 </div>
             </div>
             <div class="col-lg-7 d-none d-lg-block">
                 <div id="auth-right">
-                    <img src="{{ '/assets/images/samples/perpus.jpg' }}" alt="" style="height: 100%"
-                        width="100%">
+                    <img src="{{ '/assets/images/samples/perpus.jpg' }}" alt=""
+                        style="height: 100%; object-fit: cover;" width="100%">
                 </div>
             </div>
         </div>

@@ -3,11 +3,26 @@
 @include('components.admin')
 
 @section('content')
+    <style>
+        input:read-only {
+            background-color: white;
+            pointer-events: initial;
+        }
+    </style>
     <div class="page-heading">
         <div class="page-title">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last mb-1">
-                    <h3>Anggota</h3>
+            <div class="row mt-5 mb-3">
+                <div class="col-2 d-flex align-items-center">
+                    <h1>Anggota</h1>
+                </div>
+                <div class="col-10 d-flex align-items-center justify-content-end">
+                    <div class="user-name text-end me-3">
+                        <h6 class="mb-0 text-gray-600">{{ Auth::user()->nama }}</h6>
+                        <p class="mb-0 text-sm text-gray-600">{{ Auth::user()->kode }}</p>
+                    </div>
+                    <div class="avatar">
+                        <img src="{{ Auth::user()->foto }}" style="height: 50px; width: 50px">
+                    </div>
                 </div>
             </div>
             @include('message')
@@ -27,31 +42,22 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
+                                <th>Profile</th>
                                 <th>Kode Anggota</th>
-                                <th>NIS</th>
-                                <th>Nama Lengkap</th>
-                                <th>Username</th>
-                                <th>Kelas</th>
-                                <th>Alamat</th>
-                                <th class="col-2">Status</th>
+                                <th>Nama</th>
+                                <th>Email</th>
                                 <th class="col-1">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($anggotas as $key => $anggota)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td style="width: 70px">{{ $key + 1 }}</td>
+                                    <td style="width: 80px"><img class="avatar" src="{{ $anggota->foto }}" alt=""
+                                            style="width: 80px; height: 80px; object-fit: cover"></td>
                                     <td>{{ $anggota->kode }}</td>
-                                    <td>{{ $anggota->nis }}</td>
-                                    <td>{{ $anggota->fullname }}</td>
-                                    <td>{{ $anggota->username }}</td>
-                                    <td>{{ $anggota->kelas }}</td>
-                                    <td>{{ $anggota->alamat }}</td>
-                                    <td>
-                                        <span
-                                            class="badge d-flex justify-content-center bg-{{ $anggota->verif == 'verified' ? 'success' : 'secondary' }}">
-                                            {{ ucfirst($anggota->verif) }}
-                                    </td>
+                                    <td>{{ $anggota->nama }}</td>
+                                    <td>{{ $anggota->email }}</td>
                                     <td>
                                         <a href="#" class="btn icon btn-warning text-light" data-bs-toggle="modal"
                                             data-bs-target="#edit{{ $anggota->id }}"><i class="bi bi-pencil-fill"></i></a>
@@ -84,40 +90,27 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('admin.store_anggota') }}" method="POST">
+                    <form action="{{ route('admin.store_anggota') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <label>NIS: </label>
+                        <label>Foto Profile: </label>
                         <div class="form-group">
-                            <input type="number" placeholder="NIS Anggota" class="form-control" name="nis" required>
+                            <input type="file" accept="image/*" name="foto" class="form-control" required>
                         </div>
-                        <label>Full Name: </label>
+                        <label>Kode: </label>
                         <div class="form-group">
-                            <input type="text" placeholder="Full Name" class="form-control" name="fullname" required>
+                            <input type="text" placeholder="Kode Anggota" class="form-control" name="kode" required>
                         </div>
-                        <label>User Name: </label>
+                        <label>Nama: </label>
                         <div class="form-group">
-                            <input type="text" placeholder="Username" class="form-control" name="username" required>
+                            <input type="text" placeholder="Nama" class="form-control" name="nama" required>
+                        </div>
+                        <label>Email: </label>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" class="form-control" name="email" required>
                         </div>
                         <label>Password: </label>
                         <div class="form-group">
                             <input type="password" placeholder="Password" class="form-control" name="password" required>
-                        </div>
-                        <label>Kelas: </label>
-                        <div class="form-group">
-                            <input type="text" placeholder="Kelas" class="form-control" name="kelas" required>
-                        </div>
-                        <label>Alamat: </label>
-                        <div class="form-group">
-                            <textarea rows="5" placeholder="Alamat" class="form-control" name="alamat" required></textarea>
-                        </div>
-                        <label>Status: </label>
-                        <div class="form-group">
-                            <select name="verif" class="form-select">
-                                <option value="" disabled selected>
-                                    --Pilih Status--</option>
-                                <option value="verified">Verified</option>
-                                <option value="unverified">Unverified</option>
-                            </select>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -146,44 +139,33 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('admin.update_anggota', $anggota->id) }}" method="POST">
+                        <form action="{{ route('admin.update_anggota', $anggota->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
-                            <label>NIS: </label>
+                            <label>Change Profile: </label>
                             <div class="form-group">
-                                <input type="number" placeholder="NIS Anggota" class="form-control" name="nis"
-                                    required value="{{ $anggota->nis }}">
+                                <input type="file" accept="image/*" name="foto" class="form-control"
+                                    value="{{ $anggota->foto }}">
                             </div>
-                            <label>Full Name: </label>
+                            <label>Kode: </label>
                             <div class="form-group">
-                                <input type="text" placeholder="Full Name" class="form-control" name="fullname"
-                                    required value="{{ $anggota->fullname }}">
+                                <input type="text" placeholder="Kode Anggota" class="form-control" name="kode"
+                                    required value="{{ $anggota->kode }}">
                             </div>
-                            <label>User Name: </label>
+                            <label>Nama: </label>
                             <div class="form-group">
-                                <input type="text" placeholder="Username" class="form-control" name="username"
-                                    required value="{{ $anggota->username }}">
+                                <input type="text" placeholder="Nama" class="form-control" name="nama" required
+                                    value="{{ $anggota->nama }}">
                             </div>
-                            <label>Kelas: </label>
+                            <label>Email: </label>
                             <div class="form-group">
-                                <input type="text" placeholder="Kelas" class="form-control" name="kelas" required
-                                    value="{{ $anggota->kelas }}">
+                                <input type="email" placeholder="Email" class="form-control" name="email" required
+                                    value="{{ $anggota->email }}">
                             </div>
-                            <label>Alamat: </label>
+                            <label>Password: </label>
                             <div class="form-group">
-                                <textarea placeholder="Alamat" rows="5" class="form-control" name="alamat" required>{{ $anggota->alamat }}</textarea>
-                            </div>
-                            <label>Status: </label>
-                            <div class="form-group">
-                                <select name="verif" class="form-select">
-                                    <option value="{{ $anggota->verif }}" selected>{{ ucfirst($anggota->verif) }}
-                                    </option>
-                                    @if ($anggota->verif == 'verified')
-                                        <option value="unverified">Unverified</option>
-                                    @endif
-                                    @if ($anggota->verif == 'unverified')
-                                        <option value="verified">Verified</option>
-                                    @endif
-                                </select>
+                                <input type="password" placeholder="Reset Password" class="form-control"
+                                    name="password">
                             </div>
                     </div>
                     <div class="modal-footer">

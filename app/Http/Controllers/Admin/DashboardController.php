@@ -16,8 +16,8 @@ class DashboardController extends Controller
     {
         $anggotas = User::where('role', 'user')->get();
         $bukus = Buku::all();
-        $peminjamans = Peminjaman::where('kondisi_buku_saat_dikembalikan', null)->get();
-        $pengembalians = Peminjaman::where('kondisi_buku_saat_dikembalikan', '!=', null)->get();
+        $peminjamans = Peminjaman::where('kondisi_buku', null)->get();
+        $pengembalians = Peminjaman::where('kondisi_buku', '!=', null)->get();
         $identitas = Identitas::first();
 
         return view('admin.dashboard', compact(

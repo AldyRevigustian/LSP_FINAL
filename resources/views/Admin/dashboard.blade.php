@@ -3,19 +3,25 @@
     @include('components.admin')
 
     @section('content')
-        <div class="col">
-
-            <div class="page-heading">
-
-                <h3>Dashboard</h3>
-                <a class="btn btn-primary" href="{{ route('admin.pemberitahuan') }}">
-                    <i class="bi bi-plus-lg"></i>Pemberitahuan
-                </a>
+        <div class="col mt-2">
+            <div class="row mt-5 mb-3">
+                <div class="col-2 d-flex align-items-center">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="col-10 d-flex align-items-center justify-content-end">
+                    <div class="user-name text-end me-3">
+                        <h6 class="mb-0 text-gray-600">{{ Auth::user()->nama }}</h6>
+                        <p class="mb-0 text-sm text-gray-600">{{ Auth::user()->kode }}</p>
+                    </div>
+                    <div class="avatar">
+                        <img src="{{ Auth::user()->foto }}" style="height: 50px; width: 50px">
+                    </div>
+                </div>
             </div>
 
             <div class="page-content">
                 <section class="row">
-                    <div class="col-12 col-lg-9">
+                    <div class="col-12 col-lg-12">
                         <div class="row">
                             <div class="col-6 col-lg-3 col-md-6">
                                 <div class="card">
@@ -93,29 +99,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-3">
-                        <div class="card">
-                            <div class="card-body py-4-5 px-4">
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar avatar-xl">
-                                        <img src="{{ Auth::user()->foto }}" />
-                                    </div>
-                                    <div class="ms-3 name">
-                                        <h5 class="font-bold">{{ Auth::user()->fullname }}</h5>
-                                        <h6 class="text-muted mb-0">{{ Auth::user()->username }}</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </section>
             </div>
         </div>
         <center style="margin-top: 100px">
-            <img src="{{ $identitas->foto }}" style="width: 300px; height: 300px;" alt="">
-            <h6 class="font-bold">Alamat : {{ $identitas->alamat_app }}<br>Email : {{ $identitas->email_app }} | Nomor
-                Telepon
-                :
-                {{ $identitas->nomor_telepon }}</h6>
+            <img src="{{ $identitas->foto }}" style="max-width: 320px; height: 280px;" alt="Logo">
+            <h1>{{ $identitas->nama_app }}</h1>
         </center>
     @endsection

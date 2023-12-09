@@ -3,11 +3,26 @@
 @include('components.admin')
 
 @section('content')
+    <style>
+        input:read-only {
+            background-color: white;
+            pointer-events: initial;
+        }
+    </style>
     <div class="page-heading">
         <div class="page-title">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last mb-1">
-                    <h3>Admin</h3>
+            <div class="row mt-5 mb-3">
+                <div class="col-2 d-flex align-items-center">
+                    <h1>Pustakawan</h1>
+                </div>
+                <div class="col-10 d-flex align-items-center justify-content-end">
+                    <div class="user-name text-end me-3">
+                        <h6 class="mb-0 text-gray-600">{{ Auth::user()->nama }}</h6>
+                        <p class="mb-0 text-sm text-gray-600">{{ Auth::user()->kode }}</p>
+                    </div>
+                    <div class="avatar">
+                        <img src="{{ Auth::user()->foto }}" style="height: 50px; width: 50px">
+                    </div>
                 </div>
             </div>
             @include('message')
@@ -16,35 +31,39 @@
             <div class="card shadow-sm">
                 <div class="card-header" style="padding-bottom: 0px">
                     <h5>
-                        List Admin
+                        List Pustakawan
                     </h5>
                     <hr>
                 </div>
                 <div class="card-body">
-                    <a href="#" class="btn icon btn-primary text-light" data-bs-toggle="modal" data-bs-target="#add"><i
-                            class="bi bi-plus-lg"></i>Add</a>
+                    <a href="#" class="btn icon btn-primary text-light" data-bs-toggle="modal"
+                        data-bs-target="#add"><i class="bi bi-plus-lg"></i>Add</a>
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Nama Lengkap</th>
-                                <th>Nama Pengguna</th>
-                                <th>Terakhir Login</th>
+                                <th>Profile</th>
+                                <th>Kode Pustakawan</th>
+                                <th>Nama</th>
+                                <th>Email</th>
                                 <th class="col-1">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($admins as $key => $admin)
+                            @foreach ($admins as $key => $administrator)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $admin->fullname }}</td>
-                                    <td>{{ $admin->username }}</td>
-                                    <td>{{ $admin->terakhir_login }}</td>
+                                    <td style="width: 70px">{{ $key + 1 }}</td>
+                                    <td style="width: 80px"><img class="avatar" src="{{ $administrator->foto }}"
+                                            alt="" style="width: 80px; height: 80px; object-fit: cover"></td>
+                                    <td>{{ $administrator->kode }}</td>
+                                    <td>{{ $administrator->nama }}</td>
+                                    <td>{{ $administrator->email }}</td>
                                     <td>
                                         <a href="#" class="btn icon btn-warning text-light" data-bs-toggle="modal"
-                                            data-bs-target="#edit{{ $admin->id }}"><i class="bi bi-pencil-fill"></i></a>
+                                            data-bs-target="#edit{{ $administrator->id }}"><i
+                                                class="bi bi-pencil-fill"></i></a>
                                         <form class="d-inline" method="POST"
-                                            action="{{ route('admin.destroy_administrator', $admin->id) }}">
+                                            action="{{ route('admin.destroy_administrator', $administrator->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn icon btn-danger"><i
@@ -72,16 +91,24 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('admin.store_administrator') }}" method="POST">
+                    <form action="{{ route('admin.store_administrator') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-
-                        <label>Full Name: </label>
+                        <label>Foto Profile: </label>
                         <div class="form-group">
-                            <input type="text" placeholder="Full Name" class="form-control" name="fullname" required>
+                            <input type="file" accept="image/*" name="foto" class="form-control" required>
                         </div>
-                        <label>User Name: </label>
+                        <label>Kode: </label>
                         <div class="form-group">
-                            <input type="text" placeholder="Username" class="form-control" name="username" required>
+                            <input type="text" placeholder="Kode Pustakawan" class="form-control" name="kode"
+                                required>
+                        </div>
+                        <label>Nama: </label>
+                        <div class="form-group">
+                            <input type="text" placeholder="Nama" class="form-control" name="nama" required>
+                        </div>
+                        <label>Email: </label>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" class="form-control" name="email" required>
                         </div>
                         <label>Password: </label>
                         <div class="form-group">
@@ -114,17 +141,34 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('admin.update_administrator', $admin->id) }}" method="POST">
+                        <form action="{{ route('admin.update_administrator', $admin->id) }}" method="POST"
+                            enctype="multipart/form-data">
+
                             @csrf
-                            <label>Full Name: </label>
+                            <label>Change Profile: </label>
                             <div class="form-group">
-                                <input type="text" placeholder="Full Name" class="form-control" name="fullname" required
-                                    value="{{ $admin->fullname }}">
+                                <input type="file" accept="image/*" name="foto" class="form-control"
+                                    value="{{ $admin->foto }}">
                             </div>
-                            <label>User Name: </label>
+                            <label>Kode: </label>
                             <div class="form-group">
-                                <input type="text" placeholder="Username" class="form-control" name="username"
-                                    required value="{{ $admin->username }}">
+                                <input type="text" placeholder="Kode Admin" class="form-control" name="kode"
+                                    required value="{{ $admin->kode }}">
+                            </div>
+                            <label>Nama: </label>
+                            <div class="form-group">
+                                <input type="text" placeholder="Nama" class="form-control" name="nama" required
+                                    value="{{ $admin->nama }}">
+                            </div>
+                            <label>Email: </label>
+                            <div class="form-group">
+                                <input type="email" placeholder="Email" class="form-control" name="email" required
+                                    value="{{ $admin->email }}">
+                            </div>
+                            <label>Password: </label>
+                            <div class="form-group">
+                                <input type="password" placeholder="Reset Password" class="form-control"
+                                    name="password">
                             </div>
                     </div>
                     <div class="modal-footer">

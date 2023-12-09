@@ -10,14 +10,13 @@ class Buku extends Model
     use HasFactory;
 
     protected $fillable = [
+        'isbn',
         'judul',
-        'kategori_id',
-        'penerbit_id',
+        'kategori',
         'pengarang',
         'tahun_terbit',
-        'isbn',
-        'j_buku_baik',
-        'j_buku_rusak',
+        'jumlah_awal',
+        'stock',
         'foto'
     ];
 
@@ -26,8 +25,8 @@ class Buku extends Model
         return $this->belongsTo(Kategori::class);
     }
 
-    public function penerbit()
+    public function author()
     {
-        return $this->belongsTo(Penerbit::class);
+        return $this->belongsTo(Author::class);
     }
 }

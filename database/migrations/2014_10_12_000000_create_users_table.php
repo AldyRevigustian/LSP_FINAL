@@ -16,17 +16,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('kode', 25)->nullable();
-            $table->char('nis', 20)->nullable()->unique();
-            $table->string('fullname', 125);
-            $table->string('username', 50)->unique();
+            $table->string('nama', 125);
+            $table->string('email', 125)->unique();
             $table->string('password');
-            $table->string('kelas', 50)->nullable();
-            $table->text('alamat')->nullable();
-            $table->enum('verif', ['verified', 'unverified'])->default('unverified');
-            $table->enum('role', ['admin', 'user']);
-            $table->dateTime('join_date')->nullable();
-            $table->dateTime('terakhir_login')->nullable();
-            $table->text('foto')->nullable();
+            $table->enum('role', ['admin', 'pustakawan', 'user']);
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

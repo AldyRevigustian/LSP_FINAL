@@ -3,73 +3,73 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Penerbit;
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class PenerbitController extends Controller
 {
     public function index()
     {
-        $penerbits = Penerbit::all();
+        $authors = Author::all();
         return response()->json([
-            'data' => $penerbits
+            'data' => $authors
         ]);
     }
 
     public function store(Request $request)
     {
-        $penerbit = Penerbit::create([
+        $author = Author::create([
             'nama' => $request->nama,
             'verif' => $request->verif,
         ]);
 
-        if ($penerbit) {
-            $format = sprintf("%03d", $penerbit->id);
-            $penerbit->update([
+        if ($author) {
+            $format = sprintf("%03d", $author->id);
+            $author->update([
                 'kode' => 'PP' . '' . $format
             ]);
 
             return response()->json([
-                'message' => 'Sukses Menambahkan Penerbit',
-                'data' => $penerbit,
+                'message' => 'Sukses Menambahkan Author',
+                'data' => $author,
             ]);
         }
         return response()->json([
-            'message' => 'Gagal Menambahkan Penerbit',
+            'message' => 'Gagal Menambahkan Author',
         ], 400);
     }
 
     public function update(Request $request, $id)
     {
-        $penerbit = Penerbit::find($id);
-        if ($penerbit) {
-            $penerbit->update([
-                'nama' => $request->nama ?? $penerbit->nama,
-                'verif' => $request->verif ?? $penerbit->verif,
+        $author = Author::find($id);
+        if ($author) {
+            $author->update([
+                'nama' => $request->nama ?? $author->nama,
+                'verif' => $request->verif ?? $author->verif,
             ]);
 
             return response()->json([
-                'message' => 'Sukses Mengupdate Penerbit',
-                'data' => $penerbit,
+                'message' => 'Sukses Mengupdate Author',
+                'data' => $author,
             ]);
         }
         return response()->json([
-            'message' => 'Gagal Mengupdate Penerbit',
+            'message' => 'Gagal Mengupdate Author',
         ], 400);
     }
 
     public function destroy($id)
     {
-        $penerbit = Penerbit::find($id);
+        $author = Author::find($id);
 
-        if ($penerbit) {
-            $penerbit->delete();
+        if ($author) {
+            $author->delete();
             return response()->json([
-                'message' => 'Sukses Mendelete Penerbit',
+                'message' => 'Sukses Mendelete Author',
             ]);
         }
         return response()->json([
-            'message' => 'Gagal Mendelete Penerbit',
+            'message' => 'Gagal Mendelete Author',
         ]);
     }
 }

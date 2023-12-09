@@ -65,7 +65,8 @@
             <div class="sidebar-header position-relative">
                 <div class="d-flex justify-content-center align-items-center">
                     <div class="logo center">
-                        <img src="{{ $identitas->foto }}" style="width: 150px; height: 150px;" alt="Logo">
+                        <img src="{{ $identitas->foto }}" style="max-width: 120px; height: 100px;" alt="Logo">
+                        <h3 style="text-align: center">{{ $identitas->nama_app }}</h3>
                     </div>
                     <div class="sidebar-toggler	x">
                         <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>

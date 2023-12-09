@@ -11,9 +11,18 @@
     </style>
     <div class="page-heading">
         <div class="page-title">
-            <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last mb-1">
-                    <h3>Buku</h3>
+            <div class="row mt-5 mb-3">
+                <div class="col-2 d-flex align-items-center">
+                    <h1>Buku</h1>
+                </div>
+                <div class="col-10 d-flex align-items-center justify-content-end">
+                    <div class="user-name text-end me-3">
+                        <h6 class="mb-0 text-gray-600">{{ Auth::user()->nama }}</h6>
+                        <p class="mb-0 text-sm text-gray-600">{{ Auth::user()->kode }}</p>
+                    </div>
+                    <div class="avatar">
+                        <img src="{{ Auth::user()->foto }}" style="height: 50px; width: 50px">
+                    </div>
                 </div>
             </div>
             @include('message')
@@ -27,19 +36,19 @@
                     <hr>
                 </div>
                 <div class="card-body">
-                    <a href="#" class="btn icon btn-primary text-light" data-bs-toggle="modal" data-bs-target="#add"><i
-                            class="bi bi-plus-lg"></i> Add</a>
+                    <a href="#" class="btn icon btn-primary text-light" data-bs-toggle="modal"
+                        data-bs-target="#add"><i class="bi bi-plus-lg"></i> Add</a>
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Foto</th>
-                                <th>Judul Buku</th>
+                                <th>Cover Buku</th>
+                                <th>ISBN</th>
+                                <th>Judul</th>
                                 <th>Pengarang</th>
-                                <th>Penerbit</th>
-                                <th class="col-1">Buku Baik</th>
-                                <th class="col-1">Buku Rusak</th>
-                                <th class="col-1">Jumlah Buku</th>
+                                <th>Jumlah Awal</th>
+                                <th>Jumlah Sekarang</th>
+                                <th>Tahun Terbit</th>
                                 <th class="col-1">Aksi</th>
                             </tr>
                         </thead>
@@ -47,13 +56,14 @@
                             @foreach ($bukus as $key => $buku)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td><img src="{{ $buku->foto }}" alt="" height="100" width="100"></td>
+                                    <td><img src="{{ $buku->foto }}" alt=""
+                                            style="max-width: 150px; max-height: 150px"></td>
+                                    <td>{{ $buku->isbn }}</td>
                                     <td>{{ $buku->judul }}</td>
                                     <td>{{ $buku->pengarang }}</td>
-                                    <td>{{ $buku->penerbit->nama }}</td>
-                                    <td>{{ $buku->j_buku_baik }}</td>
-                                    <td>{{ $buku->j_buku_rusak }}</td>
-                                    <td>{{ $buku->j_buku_baik + $buku->j_buku_rusak }}</td>
+                                    <td>{{ $buku->jumlah_awal }}</td>
+                                    <td>{{ $buku->stock }}</td>
+                                    <td>{{ $buku->tahun_terbit }}</td>
                                     <td>
                                         <a href="#" class="btn icon btn-warning text-light" data-bs-toggle="modal"
                                             data-bs-target="#edit{{ $buku->id }}"><i class="bi bi-pencil-fill"></i></a>
@@ -88,6 +98,16 @@
                 <div class="modal-body">
                     <form action="{{ route('admin.store_buku') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <label>Foto Buku: </label>
+                        <div class="form-group">
+                            <input type="file" accept="image/*" name="foto" class="form-control" required>
+                        </div>
+
+                        <label>ISBN: </label>
+                        <div class="form-group">
+                            <input type="number" placeholder="ISBN" class="form-control" name="isbn" required>
+                        </div>
+
                         <label>Judul: </label>
                         <div class="form-group">
                             <input type="text" placeholder="Judul Buku" class="form-control" name="judul" required>
@@ -95,24 +115,9 @@
 
                         <label>Kategori: </label>
                         <div class="form-group">
-                            <select name="kategori_id" class="form-select">
-                                <option value="" disabled selected>
-                                    --Pilih Kategori--</option>
-                                @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" placeholder="Kategori Buku" class="form-control" name="kategori" required>
                         </div>
-                        <label for="">Penerbit : </label>
-                        <div class="form-group">
-                            <select name="penerbit_id" class="form-select">
-                                <option value="" disabled selected>
-                                    --Pilih Penerbit--</option>
-                                @foreach ($penerbits as $penerbit)
-                                    <option value="{{ $penerbit->id }}">{{ $penerbit->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+
                         <label>Pengarang: </label>
                         <div class="form-group">
                             <input type="text" placeholder="Pengarang Buku" class="form-control" name="pengarang"
@@ -121,31 +126,15 @@
 
                         <label>Tahun Terbit: </label>
                         <div class="form-group">
-                            <input type="number" placeholder="Tahun Terbit" class="form-control" name="tahun_terbit"
+                            <input type="text" placeholder="Tahun Terbit" class="form-control" name="tahun_terbit"
                                 required>
                         </div>
 
-                        <label>Isbn: </label>
+                        <label>Jumlah: </label>
                         <div class="form-group">
-                            <input type="number" placeholder="Isbn" class="form-control" name="isbn" required>
+                            <input type="number" placeholder="Jumlah" class="form-control" name="jumlah" required>
                         </div>
 
-                        <label>Jumlah Buku Baik: </label>
-                        <div class="form-group">
-                            <input type="number" placeholder="Jumlah Buku Baik" class="form-control" name="j_buku_baik"
-                                required>
-                        </div>
-
-                        <label>Jumlah Buku Rusak: </label>
-                        <div class="form-group">
-                            <input type="number" placeholder="Jumlah Buku Rusak" class="form-control" name="j_buku_rusak"
-                                required>
-                        </div>
-
-                        <label>Foto Buku: </label>
-                        <div class="form-group">
-                            <input type="file" accept="image/*" name="foto" class="form-control" required>
-                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
@@ -160,6 +149,7 @@
             </div>
         </div>
     </div>
+
 
     @foreach ($bukus as $buku)
         <div class="modal fade text-left" id="edit{{ $buku->id }}" tabindex="-1" role="dialog"
@@ -176,6 +166,17 @@
                         <form action="{{ route('admin.update_buku', $buku->id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
+                            <label>Foto Buku: </label>
+                            <div class="form-group">
+                                <input type="file" accept="image/*" name="foto" class="form-control">
+                            </div>
+
+                            <label>ISBN: </label>
+                            <div class="form-group">
+                                <input type="number" placeholder="ISBN" class="form-control" name="isbn" required
+                                    value="{{ $buku->isbn }}">
+                            </div>
+
                             <label>Judul: </label>
                             <div class="form-group">
                                 <input type="text" placeholder="Judul Buku" class="form-control" name="judul"
@@ -184,28 +185,10 @@
 
                             <label>Kategori: </label>
                             <div class="form-group">
-                                <select name="kategori_id" class="form-select">
-                                    <option value="{{ $buku->kategori_id }}" selected>{{ $buku->kategori->nama }}
-                                    </option>
-                                    @foreach ($kategoris as $kategori)
-                                        @if ($kategori->id != $buku->kategori_id)
-                                            <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                                <input type="text" placeholder="Kategori Buku" class="form-control" name="kategori"
+                                    required value="{{ $buku->kategori }}">
                             </div>
-                            <label for="">Penerbit : </label>
-                            <div class="form-group">
-                                <select name="penerbit_id" class="form-select">
-                                    <option value="{{ $buku->penerbit_id }}" selected>{{ $buku->penerbit->nama }}
-                                    </option>
-                                    @foreach ($penerbits as $penerbit)
-                                        @if ($penerbit->id != $buku->penerbit_id)
-                                            <option value="{{ $penerbit->id }}">{{ $penerbit->nama }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
+
                             <label>Pengarang: </label>
                             <div class="form-group">
                                 <input type="text" placeholder="Pengarang Buku" class="form-control" name="pengarang"
@@ -214,31 +197,20 @@
 
                             <label>Tahun Terbit: </label>
                             <div class="form-group">
-                                <input type="number" placeholder="Tahun Terbit" class="form-control"
+                                <input type="text" placeholder="Tahun Terbit" class="form-control"
                                     name="tahun_terbit" required value="{{ $buku->tahun_terbit }}">
                             </div>
 
-                            <label>Isbn: </label>
+                            <label>Jumlah Awal: </label>
                             <div class="form-group">
-                                <input type="number" placeholder="Isbn" class="form-control" name="isbn" required
-                                    value="{{ $buku->isbn }}">
+                                <input type="number" placeholder="Jumlah" class="form-control" name="jumlah" required
+                                    value="{{ $buku->jumlah_awal }}">
                             </div>
 
-                            <label>Jumlah Buku Baik: </label>
+                            <label>Jumlah Sekarang: </label>
                             <div class="form-group">
-                                <input type="number" placeholder="Jumlah Buku Baik" class="form-control"
-                                    name="j_buku_baik" required value="{{ $buku->j_buku_baik }}">
-                            </div>
-
-                            <label>Jumlah Buku Rusak: </label>
-                            <div class="form-group">
-                                <input type="number" placeholder="Jumlah Buku Rusak" class="form-control"
-                                    name="j_buku_rusak" required value="{{ $buku->j_buku_rusak }}">
-                            </div>
-
-                            <label>Foto Buku: </label>
-                            <div class="form-group">
-                                <input type="file" accept="image/*" name="foto" class="form-control">
+                                <input type="number" placeholder="Jumlah" class="form-control" name="stock" required
+                                    value="{{ $buku->stock }}">
                             </div>
                     </div>
                     <div class="modal-footer">

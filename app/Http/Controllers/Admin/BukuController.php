@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Buku;
 use App\Models\Kategori;
-use App\Models\Penerbit;
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class BukuController extends Controller
@@ -13,24 +13,20 @@ class BukuController extends Controller
     public function index()
     {
         $bukus = Buku::all();
-        $penerbits = Penerbit::all();
-        $kategoris = Kategori::all();
-        return view('admin.buku', compact('bukus', 'penerbits', 'kategoris'));
+        return view('admin.buku', compact('bukus'));
     }
 
     public function store(Request $request)
     {
         $buku = Buku::create([
+            'isbn' => $request->isbn,
             'judul' => $request->judul,
-            'kategori_id' => $request->kategori_id,
-            'penerbit_id' => $request->penerbit_id,
+            'kategori' => $request->kategori,
             'pengarang' => $request->pengarang,
             'tahun_terbit' => $request->tahun_terbit,
-            'isbn' => $request->isbn,
-            'j_buku_baik' => $request->j_buku_baik,
-            'j_buku_rusak' => $request->j_buku_rusak,
+            'jumlah_awal' => $request->jumlah,
+            'stock' => $request->jumlah,
         ]);
-
 
         $imageName = time() . '.' . $request->foto->extension();
         $request->foto->move(public_path('img'), $imageName);
@@ -48,14 +44,13 @@ class BukuController extends Controller
     {
         $buku = Buku::find($id);
         $buku->update([
+            'isbn' => $request->isbn ?? $buku->isbn,
             'judul' => $request->judul ?? $buku->judul,
-            'kategori_id' => $request->kategori_id ?? $buku->kategori_id,
-            'penerbit_id' => $request->penerbit_id ?? $buku->penerbit_id,
+            'kategori' => $request->kategori ?? $buku->kategori,
             'pengarang' => $request->pengarang ?? $buku->pengarang,
             'tahun_terbit' => $request->tahun_terbit ?? $buku->tahun_terbit,
-            'isbn' => $request->isbn ?? $buku->isbn,
-            'j_buku_baik' => $request->j_buku_baik ?? $buku->j_buku_baik,
-            'j_buku_rusak' => $request->j_buku_rusak ?? $buku->j_buku_rusak,
+            'jumlah_awal' => $request->jumlah ?? $buku->jumlah,
+            'stock' => $request->stock ?? $buku->stock,
         ]);
 
         if ($request->foto) {

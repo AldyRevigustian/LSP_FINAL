@@ -14,7 +14,7 @@ Route::group(['middleware' => ['auth:sanctum', 'role:admin'], 'prefix' => 'admin
         Route::delete('/{id}', 'destroy');
     });
 
-    Route::prefix('penerbit')->controller(App\Http\Controllers\API\admin\PenerbitController::class)->group(function () {
+    Route::prefix('author')->controller(App\Http\Controllers\API\admin\PenerbitController::class)->group(function () {
         Route::get('/',    'index');
         Route::post('/',    'store');
         Route::post('/{id}',    'update');

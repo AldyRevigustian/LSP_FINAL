@@ -17,7 +17,7 @@ class BukuController extends Controller
             $datas['id'] = $buku->id;
             $datas['judul'] = $buku->judul;
             $datas['kategori_id'] = $buku->kategori->nama;
-            $datas['penerbit_id'] = $buku->penerbit->nama;
+            $datas['author_id'] = $buku->author->nama;
             $datas['pengarang'] = $buku->pengarang;
             $datas['tahun_terbit'] = $buku->tahun_terbit;
             $datas['isbn'] = $buku->isbn;
@@ -36,7 +36,7 @@ class BukuController extends Controller
         $buku = Buku::create([
             'judul' => $request->judul,
             'kategori_id' => $request->kategori_id,
-            'penerbit_id' => $request->penerbit_id,
+            'author_id' => $request->author_id,
             'pengarang' => $request->pengarang,
             'tahun_terbit' => $request->tahun_terbit,
             'isbn' => $request->isbn,
@@ -71,7 +71,7 @@ class BukuController extends Controller
             $buku->update([
                 'judul' => $request->judul ?? $buku->judul,
                 'kategori_id' => $request->kategori_id ?? $buku->kategori_id,
-                'penerbit_id' => $request->penerbit_id ?? $buku->penerbit_id,
+                'author_id' => $request->author_id ?? $buku->author_id,
                 'pengarang' => $request->pengarang ?? $buku->pengarang,
                 'tahun_terbit' => $request->tahun_terbit ?? $buku->tahun_terbit,
                 'isbn' => $request->isbn ?? $buku->isbn,

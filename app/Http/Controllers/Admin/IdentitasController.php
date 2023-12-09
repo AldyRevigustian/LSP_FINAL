@@ -20,9 +20,10 @@ class IdentitasController extends Controller
 
         $identitas->update([
             'nama_app' => $request->nama_app ?? $identitas->nama_app,
-            'alamat_app' => $request->alamat_app ?? $identitas->alamat_app,
-            'email_app' => $request->email_app ?? $identitas->email_app,
-            'nomor_telepon' => $request->nomor_telepon ?? $identitas->nomor_telepon,
+            'denda_rusak' => $request->denda_rusak ?? $identitas->denda_rusak,
+            'denda_telat' => $request->denda_telat ?? $identitas->denda_telat,
+            'denda_hilang' => $request->denda_hilang ?? $identitas->denda_hilang,
+            'max_pinjam' => $request->max_pinjam ?? $identitas->max_pinjam,
         ]);
 
         if ($request->foto != null) {

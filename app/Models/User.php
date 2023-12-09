@@ -18,16 +18,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'kode',
-        'nis',
-        'fullname',
-        'username',
+        'nama',
+        'email',
         'password',
-        'kelas',
-        'alamat',
-        'verif',
         'role',
-        'join_date',
-        'terakhir_login',
         'foto'
     ];
 
@@ -40,7 +34,8 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function peminjamans(){
+    public function peminjamans()
+    {
         return $this->hasMany(Peminjaman::class);
     }
 }

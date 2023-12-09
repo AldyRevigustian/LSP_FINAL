@@ -11,9 +11,10 @@ class Identitas extends Model
 
     protected $fillable = [
         'nama_app',
-        'alamat_app',
-        'email_app',
-        'nomor_telepon',
-        'foto'
+        'foto',
+        'denda_rusak',
+        'denda_telat',
+        'denda_hilang',
+        'max_pinjam'
     ];
 }

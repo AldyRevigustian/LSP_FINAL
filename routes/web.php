@@ -6,31 +6,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (isset(Auth::user()->role)) {
-        if (Auth::user()->role == 'admin') {
-            return redirect()->route('admin.dashboard');
-        } else {
-            return redirect()->route('user.dashboard');
-        }
+        return redirect()->route('admin.dashboard');
     }
     return redirect('/login');
 });
 
 Route::get('/home', function () {
     if (isset(Auth::user()->role)) {
-        if (Auth::user()->role == 'admin') {
-            return redirect()->route('admin.dashboard');
-        } else {
-            return redirect()->route('user.dashboard');
-        }
+        return redirect()->route('admin.dashboard');
     }
     return redirect('/login');
 });
 
 Auth::routes();
-Route::post('/register', [UserRegisterController::class, 'store'])->name('user.register');
 
 
-Route::prefix('admin')->middleware('role:admin')->group(function () {
+Route::middleware('role:admin')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });
@@ -44,11 +35,11 @@ Route::prefix('admin')->middleware('role:admin')->group(function () {
             Route::delete('/{id}', 'destroy')->name('admin.destroy_anggota');
         });
 
-        Route::prefix('penerbit')->controller(App\Http\Controllers\Admin\PenerbitController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.penerbit');
-            Route::post('/', 'store')->name('admin.store_penerbit');
-            Route::post('/{id}', 'update')->name('admin.update_penerbit');
-            Route::delete('/{id}', 'destroy')->name('admin.destroy_penerbit');
+        Route::prefix('author')->controller(App\Http\Controllers\Admin\PenerbitController::class)->group(function () {
+            Route::get('/', 'index')->name('admin.author');
+            Route::post('/', 'store')->name('admin.store_author');
+            Route::post('/{id}', 'update')->name('admin.update_author');
+            Route::delete('/{id}', 'destroy')->name('admin.destroy_author');
         });
 
         Route::prefix('administrator')->controller(App\Http\Controllers\Admin\AdministratorController::class)->group(function () {
@@ -58,87 +49,34 @@ Route::prefix('admin')->middleware('role:admin')->group(function () {
             Route::delete('/{id}', 'destroy')->name('admin.destroy_administrator');
         });
 
-        Route::prefix('peminjaman')->controller(App\Http\Controllers\Admin\PeminjamanController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.peminjaman');
-        });
-    });
-
-    Route::prefix('katalog')->group(function () {
         Route::prefix('buku')->controller(App\Http\Controllers\Admin\BukuController::class)->group(function () {
             Route::get('/', 'index')->name('admin.buku');
             Route::post('/', 'store')->name('admin.store_buku');
             Route::post('/{id}', 'update')->name('admin.update_buku');
             Route::delete('/{id}', 'destroy')->name('admin.destroy_buku');
         });
-
-        Route::prefix('kategori')->controller(App\Http\Controllers\Admin\KategoriController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.kategori');
-            Route::post('/', 'store')->name('admin.store_kategori');
-            Route::post('/{id}', 'update')->name('admin.update_kategori');
-            Route::delete('/{id}', 'destroy')->name('admin.destroy_kategori');
-        });
     });
 
-    Route::prefix('laporan')->controller(App\Http\Controllers\Admin\LaporanController::class)->group(function () {
-        Route::get('/', 'index')->name('admin.laporan');
-        Route::post('/tgl_peminjaman', 'tgl_peminjaman')->name('admin.laporan_tglpeminjaman');
-        Route::post('/tgl_pengembalian', 'tgl_pengembalian')->name('admin.laporan_tglpengembalian');
-        Route::post('/anggota', 'anggota')->name('admin.laporan_anggota');
-        Route::post('/excel', 'excel')->name('admin.laporan_excel');
+    Route::prefix('transaksi')->group(function () {
+        Route::prefix('peminjaman')->controller(App\Http\Controllers\Admin\PeminjamanController::class)->group(function () {
+            Route::get('/', 'index')->name('admin.peminjaman');
+            Route::post('/', 'store')->name('admin.store_peminjaman');
+            Route::post('/{id}', 'update')->name('admin.update_peminjaman');
+            Route::delete('/{id}', 'destroy')->name('admin.destroy_peminjaman');
+        });
+
+        Route::prefix('pengembalian')->controller(App\Http\Controllers\Admin\PengembalianController::class)->group(function () {
+            Route::get('/', 'index')->name('admin.pengembalian');
+            Route::get('/get-denda', 'get_denda');
+            Route::post('/', 'store')->name('admin.store_pengembalian');
+            Route::post('/{id}', 'update')->name('admin.update_pengembalian');
+            Route::delete('/{id}', 'destroy')->name('admin.destroy_pengembalian');
+
+        });
     });
 
     Route::prefix('identitas')->controller(App\Http\Controllers\Admin\IdentitasController::class)->group(function () {
         Route::get('/', 'index')->name('admin.identitas');
         Route::put('/', 'update')->name('admin.update_identitas');
-    });
-
-
-    Route::prefix('pesan')->controller(App\Http\Controllers\Admin\PesanController::class)->group(function () {
-        Route::get('/terkirim', 'terkirim')->name('admin.pesan_terkirim');
-        Route::post('/terkirim', 'kirim_pesan')->name('admin.kirim_pesan');
-
-        Route::get('/masuk', 'masuk')->name('admin.pesan_masuk');
-        Route::post('/masuk', 'baca_pesan')->name('admin.baca_pesan');
-    });
-
-    Route::prefix('pemberitahuan')->controller(App\Http\Controllers\Admin\PemberitahuanController::class)->group(function () {
-        Route::get('/', 'index')->name('admin.pemberitahuan');
-        Route::post('/', 'store')->name('admin.store_pemberitahuan');
-        Route::post('/{id}', 'update')->name('admin.update_pemberitahuan');
-        Route::delete('/{id}', 'destroy')->name('admin.destroy_pemberitahuan');
-    });
-});
-
-Route::prefix('user')->middleware('role:user')->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('user.dashboard');
-    });
-    Route::get('/dashboard', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('user.dashboard');
-
-    Route::prefix('peminjaman')->controller(App\Http\Controllers\User\PeminjamanController::class)->group(function () {
-        Route::get('/', 'index')->name('user.peminjaman');
-        Route::post('/', 'store')->name('user.store_peminjaman');
-    });
-
-    Route::prefix('pengembalian')->controller(App\Http\Controllers\User\PengembalianController::class)->group(function () {
-        Route::get('/', 'index')->name('user.pengembalian');
-        Route::post('/', 'store')->name('user.store_pengembalian');
-    });
-
-    Route::prefix('pesan')->controller(App\Http\Controllers\User\PesanController::class)->group(function () {
-        Route::get('/terkirim', 'terkirim')->name('user.pesan_terkirim');
-        Route::post('/terkirim', 'kirim_pesan')->name('user.kirim_pesan');
-
-        Route::get('/masuk', 'masuk')->name('user.pesan_masuk');
-        Route::post('/masuk', 'baca_pesan')->name('user.baca_pesan');
-    });
-
-    Route::prefix('profile')->controller(App\Http\Controllers\User\ProfileController::class)->group(function () {
-        Route::get('/', 'index')->name('user.profile');
-        Route::put('/', 'update')->name('user.update_profile');
-    });
-
-    Route::prefix('info')->controller(App\Http\Controllers\User\InfoController::class)->group(function () {
-        Route::get('/', 'index')->name('user.info');
     });
 });

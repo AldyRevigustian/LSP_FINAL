@@ -15,12 +15,12 @@ class CreatePeminjamansTable extends Migration
     {
         Schema::create('peminjamans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->text('kode_pinjam');
             $table->foreignId('buku_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_pengembalian')->nullable();
-            $table->enum('kondisi_buku_saat_dipinjam', ['baik', 'rusak']);
-            $table->enum('kondisi_buku_saat_dikembalikan', ['baik', 'rusak', 'hilang'])->nullable();
+            $table->enum('kondisi_buku', ['baik', 'rusak', 'telat', 'hilang'])->nullable();
             $table->float('denda')->nullable();
             $table->timestamps();
         });

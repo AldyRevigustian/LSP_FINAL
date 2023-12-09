@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AnggotaController extends Controller
 {
@@ -17,26 +18,24 @@ class AnggotaController extends Controller
     public function store(Request $request)
     {
         $anggota = User::create([
-            'nis' => $request->nis,
-            'fullname' => $request->fullname,
-            'username' => $request->username,
+            'kode' => $request->kode,
+            'nama' => $request->nama,
+            'email' => $request->email,
             'password' => $request->password,
-            'kelas' => $request->kelas,
-            'alamat' => $request->alamat,
-            'verif' => $request->verif,
             'role' => 'user',
-            'foto' => '/assets/images/faces/1.jpg',
-            'join_date' => date('Y-m-d'),
+        ]);
+
+        $imageName = time() . '.' . $request->foto->extension();
+        $request->foto->move(public_path('img'), $imageName);
+
+        $anggota->update([
+            'foto' => "/img/" . $imageName
         ]);
 
         if ($anggota) {
-            $format = sprintf("%03d", $anggota->id);
-            $anggota->update([
-                'kode' => 'AA' . '' . $format
-            ]);
-
             return redirect()->route('admin.anggota')->with('status', 'success')->with('message', 'Sukses Menambahkan Anggota');
         }
+
         return redirect()->route('admin.anggota')->with('status', 'danger')->with('message', 'Gagal Menambahkan Anggota');
     }
 
@@ -46,13 +45,26 @@ class AnggotaController extends Controller
 
         if ($anggota) {
             $anggota->update([
-                'nis' => $request->nis ?? $anggota->nis,
-                'fullname' => $request->fullname ?? $anggota->fullname,
-                'username' => $request->username ?? $anggota->username,
-                'kelas' => $request->kelas ?? $anggota->kelas,
-                'verif' => $request->verif ?? $anggota->verif,
-                'alamat' => $request->alamat ?? $anggota->alamat,
+                'kode' => $request->kode ?? $anggota->kode,
+                'nama' => $request->nama ?? $anggota->nama,
+                'email' => $request->email ?? $anggota->email,
             ]);
+
+            if ($request->password) {
+                $anggota->update([
+                    'password' => Hash::make($request->password)
+                ]);
+            }
+
+            if ($request->foto) {
+                $imageName = time() . '.' . $request->foto->extension();
+                $request->foto->move(public_path('img'), $imageName);
+
+                $anggota->update([
+                    'foto' => "/img/" . $imageName
+                ]);
+            }
+
             return redirect()->route('admin.anggota')->with('status', 'success')->with('message', 'Suskses Mengedit Anggota');
         }
         return redirect()->route('admin.anggota')->with('status', 'danger')->with('message', 'Gagal Mengedit Anggota');
