@@ -26,7 +26,7 @@ class PeminjamanController extends Controller
         $cek = Peminjaman::where('user_id', $request->user_id)->where('tanggal_pengembalian', null)->count();
         $cek2 = Peminjaman::where('buku_id', $request->buku_id)->where('user_id', $request->user_id)->where('tanggal_pengembalian', null)->count();
 
-        if ($cek <= $max && $cek2 == 0) {
+        if ($cek < $max && $cek2 == 0) {
             if ($buku->stock > 0) {
                 $peminjaman = Peminjaman::create([
                     'kode_pinjam' => 'P' . rand(1000, 9999),

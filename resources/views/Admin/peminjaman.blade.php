@@ -76,7 +76,7 @@
 
     <div class="modal fade text-left" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel33">Tambah Peminjaman</h4>
@@ -88,15 +88,15 @@
                     <form action="{{ route('admin.store_peminjaman') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <label for="">Pilih Anggota</label>
-                        <select class="form-select" name="user_id" id="" required>
+                        <select class="form-select choices" name="user_id" id="" required>
                             <option value="" selected disabled>--Select--</option>
                             @foreach ($anggotas as $anggota)
                                 <option value="{{ $anggota->id }}">{{ $anggota->nama }}</option>
                             @endforeach
                         </select>
 
-                        <label class="mt-3" for="">Pilih Buku</label>
-                        <select class="form-select" name="buku_id" id="" required>
+                        <label class="" for="">Pilih Buku</label>
+                        <select class="form-select choices  " name="buku_id" id="" required>
                             <option value="" selected disabled>--Select--</option>
                             @foreach ($bukus as $buku)
                                 <option value="{{ $buku->id }}">{{ $buku->judul }}</option>

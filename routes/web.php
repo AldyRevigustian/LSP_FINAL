@@ -21,7 +21,7 @@ Route::get('/home', function () {
 Auth::routes();
 
 
-Route::middleware('role:admin')->group(function () {
+Route::middleware('role:admin,pustakawan')->group(function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
     });

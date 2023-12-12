@@ -20,8 +20,6 @@ class AnggotaController extends Controller
         $anggota = User::create([
             'kode' => $request->kode,
             'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => $request->password,
             'role' => 'user',
         ]);
 
@@ -47,14 +45,7 @@ class AnggotaController extends Controller
             $anggota->update([
                 'kode' => $request->kode ?? $anggota->kode,
                 'nama' => $request->nama ?? $anggota->nama,
-                'email' => $request->email ?? $anggota->email,
             ]);
-
-            if ($request->password) {
-                $anggota->update([
-                    'password' => Hash::make($request->password)
-                ]);
-            }
 
             if ($request->foto) {
                 $imageName = time() . '.' . $request->foto->extension();

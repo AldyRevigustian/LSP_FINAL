@@ -17,7 +17,7 @@
             <div class="col-lg-5 col-12" style="display: flex; flex-direction:column; justify-content:center">
                 <div id="auth-left">
                     <center>
-                        <img src="{{ '/assets/images/logo/logo.png' }}" width="130px" height="130px"
+                        <img src="{{ '/assets/images/logo/logo.png' }}" style="max-width: 180px; height: 160px;"
                             style="margin-bottom:1rem" alt="Logo" />
                     </center>
                     <h1 class="auth-title">Log in.</h1>
@@ -67,7 +67,7 @@
             <div class="col-lg-7 d-none d-lg-block">
                 <div id="auth-right">
                     <img src="{{ '/assets/images/samples/perpus.jpg' }}" alt=""
-                        style="height: 100%; object-fit: cover;" width="100%">
+                        style="height: 100%; object-fit: cover;">
                 </div>
             </div>
         </div>

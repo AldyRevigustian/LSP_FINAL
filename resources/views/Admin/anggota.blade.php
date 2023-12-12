@@ -45,7 +45,6 @@
                                 <th>Profile</th>
                                 <th>Kode Anggota</th>
                                 <th>Nama</th>
-                                <th>Email</th>
                                 <th class="col-1">Action</th>
                             </tr>
                         </thead>
@@ -57,7 +56,6 @@
                                             style="width: 80px; height: 80px; object-fit: cover"></td>
                                     <td>{{ $anggota->kode }}</td>
                                     <td>{{ $anggota->nama }}</td>
-                                    <td>{{ $anggota->email }}</td>
                                     <td>
                                         <a href="#" class="btn icon btn-warning text-light" data-bs-toggle="modal"
                                             data-bs-target="#edit{{ $anggota->id }}"><i class="bi bi-pencil-fill"></i></a>
@@ -104,14 +102,6 @@
                         <div class="form-group">
                             <input type="text" placeholder="Nama" class="form-control" name="nama" required>
                         </div>
-                        <label>Email: </label>
-                        <div class="form-group">
-                            <input type="email" placeholder="Email" class="form-control" name="email" required>
-                        </div>
-                        <label>Password: </label>
-                        <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control" name="password" required>
-                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
@@ -156,16 +146,6 @@
                             <div class="form-group">
                                 <input type="text" placeholder="Nama" class="form-control" name="nama" required
                                     value="{{ $anggota->nama }}">
-                            </div>
-                            <label>Email: </label>
-                            <div class="form-group">
-                                <input type="email" placeholder="Email" class="form-control" name="email" required
-                                    value="{{ $anggota->email }}">
-                            </div>
-                            <label>Password: </label>
-                            <div class="form-group">
-                                <input type="password" placeholder="Reset Password" class="form-control"
-                                    name="password">
                             </div>
                     </div>
                     <div class="modal-footer">

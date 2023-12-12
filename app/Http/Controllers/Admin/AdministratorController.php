@@ -21,7 +21,7 @@ class AdministratorController extends Controller
             'kode' => $request->kode,
             'nama' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'role' => 'pustakawan',
         ]);
 

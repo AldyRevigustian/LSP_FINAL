@@ -14,9 +14,11 @@
             <span>Master Data</span>
         </a>
         <ul class="submenu {{ request()->is('master*') ? 'active' : '' }}">
-            <li class="submenu-item {{ request()->is('master/administrator') ? 'active' : '' }}">
-                <a href="{{ route('admin.administrator') }}">Data Pustakawan</a>
-            </li>
+            @if (Auth::user()->role == 'admin')
+                <li class="submenu-item {{ request()->is('master/administrator') ? 'active' : '' }}">
+                    <a href="{{ route('admin.administrator') }}">Data Pustakawan</a>
+                </li>
+            @endif
             <li class="submenu-item {{ request()->is('master/anggota') ? 'active' : '' }}">
                 <a href="{{ route('admin.anggota') }}">Data Anggota</a>
             </li>
@@ -42,12 +44,14 @@
         </ul>
     </li>
 
-    <li class="sidebar-item {{ request()->is('identitas*') ? 'active' : '' }}">
-        <a href="{{ route('admin.identitas') }}" class='sidebar-link'>
-            <i class="bi bi-gear-fill"></i>
-            <span>Setting</span>
-        </a>
-    </li>
+    @if (Auth::user()->role == 'admin')
+        <li class="sidebar-item {{ request()->is('identitas*') ? 'active' : '' }}">
+            <a href="{{ route('admin.identitas') }}" class='sidebar-link'>
+                <i class="bi bi-gear-fill"></i>
+                <span>Setting</span>
+            </a>
+        </li>
+    @endif
 
     <li class="sidebar-item" style="margin-bottom:5rem;">
         <a href="{{ route('logout') }}" onclick="event.preventDefault();

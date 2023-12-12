@@ -15,14 +15,19 @@ class Role
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $role)
+
+    public function handle($request, Closure $next, ...$roles)
     {
-        if (isset(Auth::user()->role)) {
-            if (Auth::user()->role == $role) {
+        if (!Auth::check()) // I included this check because you have it, but it really should be part of your 'auth' middleware, most likely added as part of a route group.
+            return redirect('/login');
+
+        $user = Auth::user();
+
+        foreach ($roles as $role) {
+            if ($user->role == $role)
                 return $next($request);
-            }
-            abort(403);
         }
+
         return redirect('/login');
     }
 }

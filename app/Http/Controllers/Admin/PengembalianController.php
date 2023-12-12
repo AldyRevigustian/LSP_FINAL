@@ -31,9 +31,11 @@ class PengembalianController extends Controller
         ]);
 
         if ($pengembalian) {
-            $pengembalian->buku->update([
-                'stock' => $pengembalian->buku->stock + 1
-            ]);
+            if ($request->kondisi_buku != 'hilang') {
+                $pengembalian->buku->update([
+                    'stock' => $pengembalian->buku->stock + 1
+                ]);
+            }
 
             return redirect()->route('admin.pengembalian')->with('status', 'success')->with('message', 'Sukses Menambah pengembalian');
         }
@@ -70,8 +72,8 @@ class PengembalianController extends Controller
         } else {
             $peminjaman = Peminjaman::find($request->peminjaman_id);
 
-            $tanggal_sekarang = date('Y-m-d');
-            $tanggal_peminjaman = new DateTime($peminjaman->tanggal_peminjaman);
+            $tanggal_sekarang = date('Y-m-d'); //11-12-2023
+            $tanggal_peminjaman = new DateTime($peminjaman->tanggal_peminjaman); //02-12-2023
             $tanggal_sekarang = new DateTime($tanggal_sekarang);
 
             $selisih = date_diff($tanggal_peminjaman, $tanggal_sekarang);
@@ -79,8 +81,8 @@ class PengembalianController extends Controller
 
             $d = 0;
 
-            if ($selisih > 0) {
-                $d = $selisih * $denda->denda_telat;
+            if ($selisih > 7) {
+                $d = ($selisih - 7) * $denda->denda_telat;
             }
 
             return response()->json(['denda' => $d]);

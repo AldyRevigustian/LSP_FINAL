@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('kode', 25)->nullable();
             $table->string('nama', 125);
-            $table->string('email', 125)->unique();
-            $table->string('password');
+            $table->string('email', 125)->unique()->nullable();
+            $table->string('password')->nullable();
             $table->enum('role', ['admin', 'pustakawan', 'user']);
             $table->string('foto')->nullable();
             $table->timestamps();
