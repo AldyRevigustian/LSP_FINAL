@@ -8,7 +8,6 @@
     <title>{{ config('app.name', 'E-Perpus') }}</title>
 
     <link rel="stylesheet" href="/assets/css/main/app.css">
-    <link rel="stylesheet" href="/assets/css/main/app-dark.css">
     <link rel="shortcut icon" href="/assets/images/logo/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon" href="/assets/images/logo/favicon.png" type="image/png">
 
@@ -64,7 +63,7 @@
         <div class="sidebar-wrapper active">
             <div class="sidebar-header position-relative">
                 <div class="d-flex justify-content-center align-items-center">
-                    <div class="logo center">
+                    <div class="logo center d-flex flex-column align-items-center">
                         <img src="{{ $identitas->foto }}" style="max-width: 120px; height: 100px;" alt="Logo">
                         <h3 style="text-align: center">{{ $identitas->nama_app }}</h3>
                     </div>

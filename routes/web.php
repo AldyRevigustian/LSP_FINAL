@@ -35,13 +35,6 @@ Route::middleware('role:admin,pustakawan')->group(function () {
             Route::delete('/{id}', 'destroy')->name('admin.destroy_anggota');
         });
 
-        Route::prefix('author')->controller(App\Http\Controllers\Admin\PenerbitController::class)->group(function () {
-            Route::get('/', 'index')->name('admin.author');
-            Route::post('/', 'store')->name('admin.store_author');
-            Route::post('/{id}', 'update')->name('admin.update_author');
-            Route::delete('/{id}', 'destroy')->name('admin.destroy_author');
-        });
-
         Route::prefix('administrator')->controller(App\Http\Controllers\Admin\AdministratorController::class)->group(function () {
             Route::get('/', 'index')->name('admin.administrator');
             Route::post('/', 'store')->name('admin.store_administrator');
@@ -71,12 +64,18 @@ Route::middleware('role:admin,pustakawan')->group(function () {
             Route::post('/', 'store')->name('admin.store_pengembalian');
             Route::post('/{id}', 'update')->name('admin.update_pengembalian');
             Route::delete('/{id}', 'destroy')->name('admin.destroy_pengembalian');
-
         });
     });
 
     Route::prefix('identitas')->controller(App\Http\Controllers\Admin\IdentitasController::class)->group(function () {
         Route::get('/', 'index')->name('admin.identitas');
         Route::put('/', 'update')->name('admin.update_identitas');
+    });
+
+    Route::prefix('import')->controller(App\Http\Controllers\Admin\ImportController::class)->group(function () {
+        Route::get('/', 'index')->name('admin.import');
+        Route::post('/importAnggota', 'importAnggota')->name('admin.import_anggota');
+        Route::post('/importPustakawan', 'importPustakawan')->name('admin.import_pustakawan');
+        Route::post('/importBuku', 'importBuku')->name('admin.import_buku');
     });
 });

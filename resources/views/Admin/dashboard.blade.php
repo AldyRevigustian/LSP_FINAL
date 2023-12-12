@@ -102,7 +102,7 @@
                 </section>
             </div>
         </div>
-        <center style="margin-top: 100px">
+        <center style="margin-top: 50px">
             <img src="{{ $identitas->foto }}" style="max-width: 320px; height: 280px;" alt="Logo">
             <h1>{{ $identitas->nama_app }}</h1>
         </center>

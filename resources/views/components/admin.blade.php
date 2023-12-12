@@ -51,6 +51,12 @@
                 <span>Setting</span>
             </a>
         </li>
+        <li class="sidebar-item {{ request()->is('import*') ? 'active' : '' }}">
+            <a href="{{ route('admin.import') }}" class='sidebar-link'>
+                <i class="bi bi-file-earmark-arrow-down-fill"></i>
+                <span>Import</span>
+            </a>
+        </li>
     @endif
 
     <li class="sidebar-item" style="margin-bottom:5rem;">

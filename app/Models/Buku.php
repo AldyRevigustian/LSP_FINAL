@@ -19,14 +19,4 @@ class Buku extends Model
         'stock',
         'foto'
     ];
-
-    public function kategori()
-    {
-        return $this->belongsTo(Kategori::class);
-    }
-
-    public function author()
-    {
-        return $this->belongsTo(Author::class);
-    }
 }
