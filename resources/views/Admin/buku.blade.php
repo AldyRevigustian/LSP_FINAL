@@ -36,8 +36,10 @@
                     <hr>
                 </div>
                 <div class="card-body">
-                    <a href="#" class="btn icon btn-primary text-light" data-bs-toggle="modal"
-                        data-bs-target="#add"><i class="bi bi-plus-lg"></i> Add</a>
+                    @if (Auth::user()->role == 'admin')
+                        <a href="#" class="btn icon btn-primary text-light" data-bs-toggle="modal"
+                            data-bs-target="#add"><i class="bi bi-plus-lg"></i> Add</a>
+                    @endif
                     <table class="table table-striped" id="table1">
                         <thead>
                             <tr>
@@ -49,7 +51,9 @@
                                 <th>Jumlah Awal</th>
                                 <th>Jumlah Sekarang</th>
                                 <th>Tahun Terbit</th>
-                                <th class="col-1">Aksi</th>
+                                @if (Auth::user()->role == 'admin')
+                                    <th class="col-1">Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -64,17 +68,20 @@
                                     <td>{{ $buku->jumlah_awal }}</td>
                                     <td>{{ $buku->stock }}</td>
                                     <td>{{ $buku->tahun_terbit }}</td>
-                                    <td>
-                                        <a href="#" class="btn icon btn-warning text-light" data-bs-toggle="modal"
-                                            data-bs-target="#edit{{ $buku->id }}"><i class="bi bi-pencil-fill"></i></a>
-                                        <form class="d-inline" method="POST"
-                                            action="{{ route('admin.destroy_buku', $buku->id) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn icon btn-danger"><i
-                                                    class="bi bi-trash-fill"></i></a>
-                                        </form>
-                                    </td>
+                                    @if (Auth::user()->role == 'admin')
+                                        <td>
+                                            <a href="#" class="btn icon btn-warning text-light" data-bs-toggle="modal"
+                                                data-bs-target="#edit{{ $buku->id }}"><i
+                                                    class="bi bi-pencil-fill"></i></a>
+                                            <form class="d-inline" method="POST"
+                                                action="{{ route('admin.destroy_buku', $buku->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn icon btn-danger"><i
+                                                        class="bi bi-trash-fill"></i></a>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
